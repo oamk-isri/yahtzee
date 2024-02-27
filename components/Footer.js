@@ -6,7 +6,7 @@ export default Header = () => {
     return (
         <View style={style.footer}>
             <Text style={style.title}>
-                Author: RMI
+                Author: R-M. Isola
             </Text>
 
         </View>
