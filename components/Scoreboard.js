@@ -6,7 +6,7 @@ import style from "../style/style";
 export default Scoreboard = () => {
 
     const [scores, setScores] = useState("");
-    const [other, setOther] = useState([]);
+    const [other, setOther] = useState("");
 
     const getScore = async () => {
         try {
@@ -21,7 +21,8 @@ export default Scoreboard = () => {
     }
 
     useEffect(() => {
-        getScore();
+        let x = getScore();
+        setOther(x.score);
 
     }, [scores]);
 
@@ -36,7 +37,9 @@ export default Scoreboard = () => {
                 </Text>
             </Pressable>
 
-            <Text>contents of scoreboard: {scores}</Text>
+            <Text>contents of scoreboard: {other}</Text>
+
+
             
         </View>
     )
