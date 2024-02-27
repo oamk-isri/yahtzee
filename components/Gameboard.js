@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { Text, View, Pressable } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import style from "../style/style";
 
@@ -37,6 +38,22 @@ export default Gameboard = () => {
         setNbrOfThrowsLeft(nbrOfThrowsLeft-1);
         setSum(sum);
     }
+
+    const storeScore = async () => {
+      try {
+        const playerScore = {
+          name: name,
+          date: new Date().toLocaleDateString(),
+          time: new Date().toLocaleTimeString(), 
+          score: sum
+        }
+
+        await AsyncStorage.setItem("@scoreboard", JSON.stringify(playerScore));
+
+      } catch(err) {
+          console.log(err)
+      }
+  }
 
     return (
         <View style={style.gameboard}>
