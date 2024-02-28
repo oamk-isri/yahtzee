@@ -9,12 +9,13 @@ const NBR_OF_DICES = 5;
 const NBR_OF_THROWS = 5;
 const WINNING_POINTS = 23;
 
-export default Gameboard = () => {
+export default Gameboard = ({navigation, route}) => {
 
     const [nbrOfThrowsLeft, setNbrOfThrowsLeft] = useState(NBR_OF_THROWS);
     //const [nbrOfWins, setNbrOfWins] = useState(0);
     const [sum, setSum] = useState(0);
     //const [status, setStatus] = useState('');
+    const [player, setPlayer] = useState(route.params.player);
     const [selectedDices, setSelectedDices] = 
         useState(new Array(NBR_OF_DICES).fill(false));
 
@@ -70,10 +71,10 @@ export default Gameboard = () => {
     const storeScore = async () => {
       try {
         const playerScore = {
-          // name: name,
+          //player: player,
           date: new Date().toLocaleDateString(),
           time: new Date().toLocaleTimeString(), 
-          score: sum
+          points: sum
         }
 
         await AsyncStorage.setItem("@scoreboard", JSON.stringify(playerScore));
@@ -94,6 +95,8 @@ export default Gameboard = () => {
         Throw dices
         </Text>
       </Pressable>
+
+      <Text>{player}</Text>
     </View>
   )
 }

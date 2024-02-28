@@ -41,6 +41,7 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
     textAlign: 'center',
     justifyContent: 'center',
+    alignItems: "center",
     fontSize: 20,
     marginTop: 10
   },
@@ -64,5 +65,17 @@ export default StyleSheet.create({
   buttonText: {
     color:"#2B2B52",
     fontSize: 20
+  },
+  inputField: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    fontSize: 16,
+    marginTop: 10,
+    marginBottom: 10,
   }
 });
