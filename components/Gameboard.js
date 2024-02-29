@@ -240,9 +240,7 @@ export default Gameboard = ({navigation, route}) => {
             <View style={style.flex}>{diceRow}</View>
           )}
           
-          
-          
-          <Text>Throws left: {throwsLeft}</Text>
+          <Text style={style.gameinfo}>Throws left: {throwsLeft}</Text>
           <Text style={style.statusText}>{statusText}</Text>
           <Pressable style={style.button}
             onPress={() => throwDices()}>
@@ -258,7 +256,7 @@ export default Gameboard = ({navigation, route}) => {
           )}
           
           <View style={style.flex}>{spotRow}</View>
-          <Text>Player: {player}</Text>
+          <Text style={style.gameinfo}>Player: {player}</Text>
         </View>
       ) : (
         <View style={style.gameboard}>

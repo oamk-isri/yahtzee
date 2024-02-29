@@ -39,7 +39,10 @@ export default function BottomNav() {
             tabBarActiveTintColor: PRIMARY_COLOR,
             tabBarInactiveTintColor: SECONDARY_COLOR,
           })}>
-            <Tab.Screen name={HOME} component={Home} />
+            <Tab.Screen
+              name={HOME}
+              component={Home}
+              options={{tabBarStyle: { display: "none" }}}/>
             <Tab.Screen name={GAMEBOARD} component={Gameboard} />
             <Tab.Screen name={SCOREBOARD} component={Scoreboard} />
             

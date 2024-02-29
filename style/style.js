@@ -36,7 +36,10 @@ export default StyleSheet.create({
     //color: '#fff',
     fontWeight: 'bold',
     fontSize: 30,
-    marginBottom: 50
+    marginBottom: 30
+  },
+  bold: {
+    fontWeight: "bold"
   },
   author: {
     color: '#fff',
@@ -64,7 +67,9 @@ export default StyleSheet.create({
     padding: 10
   },
   flex: {
-    flexDirection: "row"
+    flexDirection: "row",
+    marginTop: 15,
+    marginBottom: 10
   },
   button: {
     margin: 30,
@@ -101,6 +106,7 @@ export default StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 8,
     fontSize: 17,
-    marginTop: 10,
+    marginTop: 15,
+    marginBottom: -10
   }
 });
