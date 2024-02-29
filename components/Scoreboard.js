@@ -31,6 +31,8 @@ export default Scoreboard = () => {
     return (
         <View style={style.container}>
             <Header/>
+            <View style={style.innerContainer}>
+
             <Text>Scoreboard!</Text>
 
             <Pressable style={style.button}
@@ -43,6 +45,8 @@ export default Scoreboard = () => {
             <Text>contents of scoreboard: {other}</Text>
 
 
+            
+            </View>
             <Footer/>
         </View>
     )

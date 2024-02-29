@@ -225,8 +225,9 @@ export default Gameboard = ({navigation, route}) => {
   }
 
   return (
-    <View>
+    <View style={style.container}>
       <Header/>
+      <View style={style.innerContainer}>
       {!gameOver ? (
         <View style={style.gameboard}>
 
@@ -276,6 +277,7 @@ export default Gameboard = ({navigation, route}) => {
           </Pressable>
         </View>
       )}
+      </View>
       <Footer/>
   </View>
   

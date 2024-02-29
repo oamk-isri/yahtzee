@@ -27,7 +27,7 @@ export default Home = ({navigation}) => {
     return (
     <View style={style.container}>
         <Header />
-        
+        <View style={style.innerContainer}>
         <View style ={style.gameinfo}>
             <MaterialCommunityIcons name="information" size={100} color={PRIMARY_COLOR} />
             
@@ -89,7 +89,8 @@ export default Home = ({navigation}) => {
             </View>
             )}
         </View>
-        <Footer />
+        </View>
+        <Footer/>
     </View>
     )
 }

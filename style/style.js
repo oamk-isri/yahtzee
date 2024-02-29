@@ -10,14 +10,17 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff'
   },
+  innerContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    margin: 15,
+  },
   header: {
-    marginTop: 30,
-    marginBottom: 15,
     backgroundColor: SECONDARY_COLOR,
     flexDirection: 'row',
   },
   footer: {
-    marginTop: 20,
+    // marginTop: 20,
     backgroundColor: SECONDARY_COLOR,
     flexDirection: 'row'
   },
