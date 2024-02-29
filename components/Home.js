@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Text, View, Pressable, TextInput } from "react-native";
+import { Text, View, ScrollView, Pressable, TextInput } from "react-native";
 import style from "../style/style";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -26,8 +26,10 @@ export default Home = ({navigation}) => {
 
     return (
     <View style={style.container}>
-        <Header />
-        <View style={style.innerContainer}>
+    <Header />
+    <ScrollView style={style.container}>
+    <View style={style.innerContainer}>
+
         <View style ={style.gameinfo}>
             <MaterialCommunityIcons name="information" size={100} color={PRIMARY_COLOR} />
             
@@ -88,8 +90,9 @@ export default Home = ({navigation}) => {
             </View>
             )}
         </View>
-        </View>
-        <Footer/>
+    </View>
+    </ScrollView>
+    <Footer/>
     </View>
     )
 }

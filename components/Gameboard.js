@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Text, View, Pressable, Alert, FlatList } from "react-native";
+import { Text, View, ScrollView, Pressable} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import style from "../style/style";
@@ -226,8 +226,9 @@ export default Gameboard = ({navigation, route}) => {
 
   return (
     <View style={style.container}>
-      <Header/>
-      <View style={style.innerContainer}>
+    <Header/>
+    <ScrollView style={style.container}>
+    <View style={style.innerContainer}>
       {!gameOver ? (
         <View style={style.gameboard}>
 
@@ -277,8 +278,9 @@ export default Gameboard = ({navigation, route}) => {
           </Pressable>
         </View>
       )}
-      </View>
-      <Footer/>
+  </View>
+  </ScrollView>
+  <Footer/>
   </View>
   
   )

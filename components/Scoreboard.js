@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Text, View, Pressable , Alert} from "react-native";
+import { Text, View, ScrollView, Pressable} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import style from "../style/style";
 import Header from "./Header";
@@ -30,24 +30,22 @@ export default Scoreboard = () => {
 
     return (
         <View style={style.container}>
-            <Header/>
-            <View style={style.innerContainer}>
-
+        <Header/>
+        <ScrollView style={style.container}>
+        <View style={style.innerContainer}>
+        
             <Text>Scoreboard!</Text>
-
             <Pressable style={style.button}
                 onPress={() => setScores("test3")}>
                 <Text style={style.buttonText}>
                 Set a Score
                 </Text>
             </Pressable>
-
             <Text>contents of scoreboard: {other}</Text>
-
-
-            
-            </View>
-            <Footer/>
+        
+        </View>
+        </ScrollView>
+        <Footer/>
         </View>
     )
 }
