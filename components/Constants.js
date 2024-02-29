@@ -5,6 +5,8 @@ export const MIN_SPOT = 1;
 export const BONUS_TRESHOLD = 63;
 export const BONUS_POINTS = 50;
 
+export const STORAGE_KEY = "@scoreboard"
+
 export const PRIMARY_COLOR = "tomato";
 export const SECONDARY_COLOR = "rosybrown";
 export const BUTTON_TEXT = "white"

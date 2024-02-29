@@ -10,7 +10,8 @@ import {
   BONUS_TRESHOLD,
   BONUS_POINTS,
   PRIMARY_COLOR,
-  SECONDARY_COLOR
+  SECONDARY_COLOR,
+  STORAGE_KEY
 } from "./Constants";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -50,6 +51,7 @@ export default Gameboard = ({navigation, route}) => {
         setTotalPoints(totalPoints + BONUS_POINTS);
       }
       setGameOver(true);
+      storeScore();
     }
   }, [spotTotals]);
     
@@ -210,13 +212,13 @@ export default Gameboard = ({navigation, route}) => {
   const storeScore = async () => {
     try {
       const playerScore = {
-        //player: player,
+        player: player,
         date: new Date().toLocaleDateString(),
         time: new Date().toLocaleTimeString(), 
-        points: sum
+        points: totalPoints
       }
 
-      await AsyncStorage.setItem("@scoreboard", JSON.stringify(playerScore));
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(playerScore));
     }
       
     catch(err) {
