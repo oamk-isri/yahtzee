@@ -12,7 +12,7 @@ import {
   PRIMARY_COLOR,
   SECONDARY_COLOR,
   STORAGE_KEY
-} from "./Constants";
+} from "../constants/Game";
 import Footer from "./Footer";
 import Header from "./Header";
 

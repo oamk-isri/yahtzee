@@ -13,7 +13,7 @@ import {
     BONUS_POINTS,
     PRIMARY_COLOR
 
-} from "./Constants";
+} from "../constants/Game";
 
 export default Home = ({navigation}) => {
 

@@ -4,7 +4,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Gameboard from './Gameboard';
 import Scoreboard from './Scoreboard';
 import Home from './Home';
-import { PRIMARY_COLOR, SECONDARY_COLOR } from './Constants';
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../constants/Game';
 
 const Tab = createBottomTabNavigator();
 

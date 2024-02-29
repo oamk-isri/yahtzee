@@ -3,7 +3,7 @@ import {
   PRIMARY_COLOR,
   SECONDARY_COLOR,
   BUTTON_TEXT,
-} from '../components/Constants';
+} from '../constants/Game';
 
 export default StyleSheet.create({
   container: {
