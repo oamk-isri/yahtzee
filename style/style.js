@@ -24,6 +24,12 @@ export default StyleSheet.create({
     textAlign: 'center',
     margin: 10,
   },
+  bigText: {
+    //color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 30,
+    marginBottom: 50
+  },
   author: {
     color: '#fff',
     fontWeight: 'bold',
@@ -77,5 +83,16 @@ export default StyleSheet.create({
     fontSize: 16,
     marginTop: 10,
     marginBottom: 10,
+  },
+  statusText: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    fontSize: 17,
+    marginTop: 10,
   }
 });

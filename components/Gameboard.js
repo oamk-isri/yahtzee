@@ -1,102 +1,260 @@
 import React, {useState, useEffect} from "react";
-import { Text, View, Pressable } from "react-native";
+import { Text, View, Pressable, Alert, FlatList } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import style from "../style/style";
 
 let board = [];
+
 const NBR_OF_DICES = 5;
-const NBR_OF_THROWS = 5;
-const WINNING_POINTS = 23;
+const NBR_OF_THROWS = 3;
+const MAX_SPOT = 6;
+const BONUS_TRESHOLD = 30
 
 export default Gameboard = ({navigation, route}) => {
+    
+  const [player, setPlayer] = useState(route.params.player);
 
-    const [nbrOfThrowsLeft, setNbrOfThrowsLeft] = useState(NBR_OF_THROWS);
-    //const [nbrOfWins, setNbrOfWins] = useState(0);
-    const [sum, setSum] = useState(0);
-    //const [status, setStatus] = useState('');
-    const [player, setPlayer] = useState(route.params.player);
-    const [selectedDices, setSelectedDices] = 
-        useState(new Array(NBR_OF_DICES).fill(false));
+  const [statusText, setStatusText] = useState("Throw dices.");
+  const [totalPoints, setTotalPoints] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
+  const [bonusAdded, setBonusAdded] = useState(false);
 
+  // dice states
+  const [throwsLeft, setThrowsLeft] = useState(NBR_OF_THROWS);
+  const [selectedDices, setSelectedDices] = useState(
+    new Array(NBR_OF_DICES).fill(false));
 
-    const Dice = ({index}) => {
-      return(
-        <Pressable 
-            key={"row" + index}
-            onPress={() => selectDice(index)}>
-          <MaterialCommunityIcons
-            name={board[index]}
-            key={"row" + index}
-            size={50} 
-            color={getDiceColor(index)}>
-          </MaterialCommunityIcons>
-        </Pressable>
-      )
+  // spot states
+  const [spotsLeft, setSpotsLeft] = useState(MAX_SPOT);
+  const [selectedSpots, setSelectedSpots] = 
+      useState(new Array(MAX_SPOT).fill(false));
+  const [spotTotals, setSpotTotals] =
+      useState(new Array(MAX_SPOT).fill(0));
+
+  useEffect(() => {
+
+    if (totalPoints >= BONUS_TRESHOLD) {
+      setBonusAdded(true);
+    }
+      
+    if (spotsLeft === 0) {
+      if (bonusAdded) {
+        setTotalPoints(totalPoints + 50);
+      }
+      setGameOver(true);
+    }
+  }, [spotTotals]);
+    
+  const resetGame = () => {
+
+    // reset states to originals
+    setStatusText("Throw Dices.");
+    setTotalPoints(0);
+    setThrowsLeft(NBR_OF_THROWS);
+    setSelectedDices(new Array(NBR_OF_DICES).fill(false));
+    setSpotsLeft(MAX_SPOT);
+    setSelectedSpots(new Array(MAX_SPOT).fill(false));
+    setSpotTotals(new Array(MAX_SPOT).fill(0));
+    setGameOver(false);
+  }
+
+  const Dice = ({index}) => {
+    return(
+      <Pressable 
+          key={"row" + index}
+          onPress={() => selectDice(index)}>
+        <MaterialCommunityIcons
+          name={board[index]}
+          key={"row" + index}
+          size={50} 
+          color={getDiceColor(index)}>
+        </MaterialCommunityIcons>
+      </Pressable>
+    )
+  }
+
+  const Spot = ({index}) => {
+    return(
+      <Pressable 
+          key={"row" + index}
+          onPress={() => selectSpots(index)}>
+        <Text>{spotTotals[index-1]}</Text>
+        <MaterialCommunityIcons
+          name={"numeric-" + index + "-circle"}
+          key={"row" + index}
+          size={50} 
+          color={getSpotColor(index)}>
+        </MaterialCommunityIcons>
+      </Pressable>
+    )
+  }
+
+  const diceRow = [];
+  for (let i = 0; i < NBR_OF_DICES; i++) {
+    diceRow.push(
+      <Dice key={i} index={i}/>
+    );
+  }
+
+  const spotRow = [];
+  for (let i = 1; i <= MAX_SPOT; i++) {
+    spotRow.push(
+      <Spot key={i} index={i}/>
+    );
+  }
+
+  function getDiceColor(i) {
+    return selectedDices[i] ? "black" : "steelblue";
+  }
+
+  const selectDice = (i) => {
+    
+    // don't allow selecting before first throw
+    if (throwsLeft == NBR_OF_THROWS) {
+      setStatusText("You must throw before selecting!")
+      return;
     }
 
-    const row = [];
+    let dices = [...selectedDices];
+    dices[i] = selectedDices[i] ? false : true;
+    setSelectedDices(dices);
+  }
+
+  const throwDices = () => {
+
+    if (throwsLeft == 0) {
+      setStatusText("No throws left, you must set points first!")
+      return;
+    }
+
     for (let i = 0; i < NBR_OF_DICES; i++) {
-      row.push(
-        <Dice key={i} index={i}/>
-      );
-    }
-
-    function getDiceColor(i) {
-      if (board.every((val, i, arr) => val === arr[0])) {
-        return "orange";
-      }
-      else {
-        return selectedDices[i] ? "black" : "steelblue";
-      }
-    }
-
-    const selectDice = (i) => {
-      let dices = [...selectedDices];
-      dices[i] = selectedDices[i] ? false : true;
-      setSelectedDices(dices);
-    }
-
-    const throwDices = () => {
-      let sum = 0;
-      for (let i = 0; i < NBR_OF_DICES; i++) {
+      
+      // check if dice is selected, if not, throw it
+      if (!selectedDices[i]) {
         let randomNumber = Math.floor(Math.random() * 6 + 1);
         board[i] = 'dice-' + randomNumber;
-        sum += randomNumber;
       }
-      setNbrOfThrowsLeft(nbrOfThrowsLeft-1);
-      setSum(sum);
+        
+    }
+    setThrowsLeft(throwsLeft - 1);
+  }
+
+    
+
+  function getSpotColor(i) {
+    return selectedSpots[i] ? "black" : "steelblue";
+  }
+
+  const selectSpots = (i) => {
+
+    if (throwsLeft > 0) {
+      setStatusText("Throw " + throwsLeft + " before setting points!")
+      return;
     }
 
-    const storeScore = async () => {
-      try {
-        const playerScore = {
-          //player: player,
-          date: new Date().toLocaleDateString(),
-          time: new Date().toLocaleTimeString(), 
-          points: sum
-        }
+    let spots = [...selectedSpots];
 
-        await AsyncStorage.setItem("@scoreboard", JSON.stringify(playerScore));
-      }
+    // if spot isn't selected yet
+    if (!spots[i]) {
+      spots[i] = selectedSpots[i] ? false : true;
+      setSelectedSpots(spots);
+      let points = calculateSpotPoints(i);
       
-      catch(err) {
-        console.log(err)
+      const newSpotTotals = [...spotTotals];
+      newSpotTotals[i-1] = points;
+      setSpotTotals(newSpotTotals);
+      
+      calculateTotalPoints(newSpotTotals);
+      setSpotsLeft(spotsLeft - 1)
+      setThrowsLeft(3);
+      setSelectedDices(new Array(NBR_OF_DICES).fill(false))
+    }
+
+    // if spot is selected already
+    else {
+      setStatusText("Spot " + i + " is selected already!")
+    }
+      
+  }
+
+  const calculateSpotPoints = (spotValue) => {
+    let currentDices = [...board];
+    const diceCount = currentDices.filter(dice => {
+      
+      // board has icon names, extract the dice values
+      const num = parseInt(dice.split('-')[1]);
+      return num === spotValue;
+    });
+
+    return diceCount.length * spotValue
+  }
+
+  const calculateTotalPoints = (totals) => {
+    let sum = totals.reduce((acc, curr) => acc + curr)
+    setTotalPoints(sum);
+  }
+
+  const storeScore = async () => {
+    try {
+      const playerScore = {
+        //player: player,
+        date: new Date().toLocaleDateString(),
+        time: new Date().toLocaleTimeString(), 
+        points: sum
+      }
+
+      await AsyncStorage.setItem("@scoreboard", JSON.stringify(playerScore));
+    }
+      
+    catch(err) {
+      console.log(err)
     }
   }
 
   return (
-    <View style={style.gameboard}>
-      <View style={style.flex}>{row}</View>
-      <Text>{sum}</Text>
-      <Pressable style={style.button}
-        onPress={() => throwDices()}>
-        <Text style={style.buttonText}>
-        Throw dices
-        </Text>
-      </Pressable>
+    <View>
+      {!gameOver ? (
+        <View style={style.gameboard}>
+          <View style={style.flex}>{diceRow}</View>
+          <Text>Throws left: {throwsLeft}</Text>
+          <Text style={style.statusText}>{statusText}</Text>
+          <Pressable style={style.button}
+            onPress={() => throwDices()}>
+            <Text style={style.buttonText}>
+            Throw dices
+            </Text>
+          </Pressable>
+          <Text style={style.bigText}>Total: {totalPoints}</Text>
+          {!bonusAdded ? (
+            <Text>You are {BONUS_TRESHOLD - totalPoints} points away from bonus</Text>
+          ) : (
+            <Text>Congrats! Bonus points will be added.</Text>
+          )}
+          
+          <View style={style.flex}>{spotRow}</View>
+          <Text>Player: {player}</Text>
+        </View>
+      ) : (
+        <View style={style.gameboard}>
+          <MaterialCommunityIcons name="dice-multiple" size={150} color="black" />
+          <Text style={style.bigText}>Game Over!</Text>
 
-      <Text>{player}</Text>
-    </View>
+          {!bonusAdded ? (
+            <Text>You did not get any bonus points.</Text>
+          ) : (
+            <Text>You got bonus of 50 points!</Text>
+          )}
+
+          <Text style={style.bigText}>Final points: {totalPoints}</Text>
+          <Pressable style={style.button}
+            onPress={() => resetGame()}>
+            <Text style={style.buttonText}>
+            Play Again!
+            </Text>
+          </Pressable>
+        </View>
+      )}
+  </View>  
   )
 }
