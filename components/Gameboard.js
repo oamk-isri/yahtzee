@@ -12,6 +12,8 @@ import {
   PRIMARY_COLOR,
   SECONDARY_COLOR
 } from "./Constants";
+import Footer from "./Footer";
+import Header from "./Header";
 
 let board = [];
 
@@ -224,6 +226,7 @@ export default Gameboard = ({navigation, route}) => {
 
   return (
     <View>
+      <Header/>
       {!gameOver ? (
         <View style={style.gameboard}>
 
@@ -273,6 +276,8 @@ export default Gameboard = ({navigation, route}) => {
           </Pressable>
         </View>
       )}
-  </View>  
+      <Footer/>
+  </View>
+  
   )
 }

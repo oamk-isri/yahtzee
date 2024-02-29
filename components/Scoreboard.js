@@ -2,6 +2,8 @@ import React, {useState, useEffect} from "react";
 import { Text, View, Pressable , Alert} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import style from "../style/style";
+import Header from "./Header";
+import Footer from "./Footer";
 
 export default Scoreboard = () => {
 
@@ -28,6 +30,7 @@ export default Scoreboard = () => {
 
     return (
         <View style={style.container}>
+            <Header/>
             <Text>Scoreboard!</Text>
 
             <Pressable style={style.button}
@@ -40,7 +43,7 @@ export default Scoreboard = () => {
             <Text>contents of scoreboard: {other}</Text>
 
 
-            
+            <Footer/>
         </View>
     )
 }
