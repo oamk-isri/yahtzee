@@ -1,4 +1,9 @@
 import { StyleSheet } from 'react-native';
+import {
+  PRIMARY_COLOR,
+  SECONDARY_COLOR,
+  BUTTON_TEXT,
+} from '../components/Constants';
 
 export default StyleSheet.create({
   container: {
@@ -8,12 +13,12 @@ export default StyleSheet.create({
   header: {
     marginTop: 30,
     marginBottom: 15,
-    backgroundColor: 'skyblue',
+    backgroundColor: SECONDARY_COLOR,
     flexDirection: 'row',
   },
   footer: {
     marginTop: 20,
-    backgroundColor: 'skyblue',
+    backgroundColor: SECONDARY_COLOR,
     flexDirection: 'row'
   },
   title: {
@@ -62,21 +67,21 @@ export default StyleSheet.create({
     margin: 30,
     flexDirection: "row",
     padding: 10,
-    backgroundColor: "#73CED6",
+    backgroundColor: PRIMARY_COLOR,
     width: 150,
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center'
   },
   buttonText: {
-    color:"#2B2B52",
+    color: BUTTON_TEXT,
     fontSize: 20
   },
   inputField: {
     textAlign: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: SECONDARY_COLOR,
     borderRadius: 5,
     paddingHorizontal: 10,
     paddingVertical: 8,
@@ -88,7 +93,7 @@ export default StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: SECONDARY_COLOR,
     borderRadius: 1,
     paddingHorizontal: 10,
     paddingVertical: 8,

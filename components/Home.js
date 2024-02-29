@@ -4,13 +4,16 @@ import style from "../style/style";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import {
+    NBR_OF_DICES,
+    NBR_OF_THROWS,
+    MAX_SPOT,
+    MIN_SPOT,
+    BONUS_TRESHOLD,
+    BONUS_POINTS,
+    PRIMARY_COLOR
 
-const NBR_OF_DICES = 0;
-const NBR_OF_THROWS = 0;
-const MIN_SPOT = 3;
-const MAX_SPOT = 4;
-const BONUS_POINTS = 3;
-const BONUS_POINTS_LIMIT = 4;
+} from "./Constants";
 
 export default Home = ({navigation}) => {
 
@@ -26,7 +29,7 @@ export default Home = ({navigation}) => {
         <Header />
         
         <View style ={style.gameinfo}>
-            <MaterialCommunityIcons name="information" size={100} color="green" />
+            <MaterialCommunityIcons name="information" size={100} color={PRIMARY_COLOR} />
             
             {/* if showRules is true, switch view */}
             { !showRules ? (
@@ -72,7 +75,7 @@ export default Home = ({navigation}) => {
             </Text>
             <Text>
             GOAL: To get points as much as possible.
-            {BONUS_POINTS_LIMIT} points is the limit of
+            {BONUS_TRESHOLD} points is the limit of
             getting bonus which gives you {BONUS_POINTS}
             points more.
             </Text>

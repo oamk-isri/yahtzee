@@ -3,13 +3,17 @@ import { Text, View, Pressable, Alert, FlatList } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import style from "../style/style";
+import {
+  NBR_OF_DICES,
+  NBR_OF_THROWS,
+  MAX_SPOT,
+  BONUS_TRESHOLD,
+  BONUS_POINTS,
+  PRIMARY_COLOR,
+  SECONDARY_COLOR
+} from "./Constants";
 
 let board = [];
-
-const NBR_OF_DICES = 5;
-const NBR_OF_THROWS = 3;
-const MAX_SPOT = 6;
-const BONUS_TRESHOLD = 30
 
 export default Gameboard = ({navigation, route}) => {
     
@@ -21,6 +25,7 @@ export default Gameboard = ({navigation, route}) => {
   const [bonusAdded, setBonusAdded] = useState(false);
 
   // dice states
+  const [firstThrow, setFirstThrow] = useState(false);
   const [throwsLeft, setThrowsLeft] = useState(NBR_OF_THROWS);
   const [selectedDices, setSelectedDices] = useState(
     new Array(NBR_OF_DICES).fill(false));
@@ -40,7 +45,7 @@ export default Gameboard = ({navigation, route}) => {
       
     if (spotsLeft === 0) {
       if (bonusAdded) {
-        setTotalPoints(totalPoints + 50);
+        setTotalPoints(totalPoints + BONUS_POINTS);
       }
       setGameOver(true);
     }
@@ -51,6 +56,7 @@ export default Gameboard = ({navigation, route}) => {
     // reset states to originals
     setStatusText("Throw Dices.");
     setTotalPoints(0);
+    setFirstThrow(false);
     setThrowsLeft(NBR_OF_THROWS);
     setSelectedDices(new Array(NBR_OF_DICES).fill(false));
     setSpotsLeft(MAX_SPOT);
@@ -105,7 +111,7 @@ export default Gameboard = ({navigation, route}) => {
   }
 
   function getDiceColor(i) {
-    return selectedDices[i] ? "black" : "steelblue";
+    return selectedDices[i] ? PRIMARY_COLOR : SECONDARY_COLOR;
   }
 
   const selectDice = (i) => {
@@ -122,6 +128,10 @@ export default Gameboard = ({navigation, route}) => {
   }
 
   const throwDices = () => {
+
+    if (!firstThrow) {
+      setFirstThrow(true)
+    }
 
     if (throwsLeft == 0) {
       setStatusText("No throws left, you must set points first!")
@@ -143,7 +153,7 @@ export default Gameboard = ({navigation, route}) => {
     
 
   function getSpotColor(i) {
-    return selectedSpots[i] ? "black" : "steelblue";
+    return selectedSpots[i] ? PRIMARY_COLOR : SECONDARY_COLOR;
   }
 
   const selectSpots = (i) => {
@@ -216,7 +226,15 @@ export default Gameboard = ({navigation, route}) => {
     <View>
       {!gameOver ? (
         <View style={style.gameboard}>
-          <View style={style.flex}>{diceRow}</View>
+
+          {!firstThrow ? (
+            <MaterialCommunityIcons name="dice-multiple" size={125} color={PRIMARY_COLOR} />
+          ) : (
+            <View style={style.flex}>{diceRow}</View>
+          )}
+          
+          
+          
           <Text>Throws left: {throwsLeft}</Text>
           <Text style={style.statusText}>{statusText}</Text>
           <Pressable style={style.button}
@@ -237,13 +255,13 @@ export default Gameboard = ({navigation, route}) => {
         </View>
       ) : (
         <View style={style.gameboard}>
-          <MaterialCommunityIcons name="dice-multiple" size={150} color="black" />
+          <MaterialCommunityIcons name="dice-multiple" size={125} color={SECONDARY_COLOR} />
           <Text style={style.bigText}>Game Over!</Text>
 
           {!bonusAdded ? (
             <Text>You did not get any bonus points.</Text>
           ) : (
-            <Text>You got bonus of 50 points!</Text>
+            <Text>You got bonus of {BONUS_POINTS} points!</Text>
           )}
 
           <Text style={style.bigText}>Final points: {totalPoints}</Text>
