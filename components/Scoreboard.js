@@ -4,6 +4,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import style from "../style/style";
 import Header from "./Header";
 import Footer from "./Footer";
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { PRIMARY_COLOR } from "../constants/Game";
 
 export default Scoreboard = () => {
 
@@ -34,14 +36,14 @@ export default Scoreboard = () => {
         <ScrollView style={style.container}>
         <View style={style.innerContainer}>
         
-            <Text>Scoreboard!</Text>
-            <Pressable style={style.button}
-                onPress={() => setScores("test3")}>
-                <Text style={style.buttonText}>
-                Set a Score
-                </Text>
-            </Pressable>
-            <Text>contents of scoreboard: {other}</Text>
+            <View style= {style.gameinfo}>
+            <MaterialCommunityIcons name="account-hard-hat" size={125} color={PRIMARY_COLOR} />
+            <Text style={style.bigText}>
+                No scroreboard here yet!
+            </Text>
+            </View>
+
+           
         
         </View>
         </ScrollView>
