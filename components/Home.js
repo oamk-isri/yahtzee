@@ -48,7 +48,6 @@ export default Home = ({navigation}) => {
                 onPress={handleConfirm}>
                     <Text style={style.buttonText}>OK</Text>
                 </Pressable>
-                <Text>{player}</Text>
             </View>
             ) : (
             <View>
@@ -79,13 +78,13 @@ export default Home = ({navigation}) => {
             getting bonus which gives you {BONUS_POINTS}
             points more.
             </Text>
-
+            <View style={style.gameinfo}>
             <Pressable
             style={style.button}
             onPress={() => navigation.navigate("Gameboard", {player})}>
                 <Text style={style.buttonText}>OK</Text>
             </Pressable>
-            
+            </View>
             </View>
             )}
         </View>
